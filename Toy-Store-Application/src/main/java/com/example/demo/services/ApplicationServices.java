@@ -4,10 +4,15 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 
 import com.example.demo.model.ApplicationModel;
+
 import com.example.demo.repository.ApplicationRepo;
 
 @Service
@@ -52,5 +57,28 @@ public class ApplicationServices {
 	
 	public void deleteall() {
 		ar.deleteAll();
+	}
+	
+	//sorting
+	public List<ApplicationModel>sortinfo(String s){
+		return ar.findAll(Sort.by(Direction.ASC, s));
+	}
+	
+	public List<ApplicationModel>getbypage(int pgno, int pgsize){
+		Page<ApplicationModel> p = ar.findAll(PageRequest.of(pgno, pgsize));
+		return p.getContent();
+	}
+	
+	public List<ApplicationModel> getmodel(int i){
+		return ar.getmodelinfo(i);
+	}
+	public String deletefromtable(int i) {
+		ar.deletefromtable(i);
+		return "object deleted successfully";
+	}
+	
+	public String updatetable(int i) {
+		ar.updatetable(i);
+		return "object updated successfully";
 	}
 }

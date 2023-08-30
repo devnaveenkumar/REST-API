@@ -1,62 +1,97 @@
 package com.example.demo.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "toyStoreTable")
+@Table(name = "toystoretable")
 public class ApplicationModel {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int Id;
-	private String ToyName;
-	private int Price;
-	private String AgeCategory;
-	private String Description;
+	private int id;
+	private String toyname;
+	private int price;
+	private String agecategory;
+	private String description;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@Fetch(FetchMode.JOIN)
+	@JoinColumn(name = "fk_courseid")
+	private UserModel usr;
+	
 	public ApplicationModel() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public ApplicationModel(int id, String toyName, int price, String ageCategory, String description) {
+
+	public ApplicationModel(int id, String toyname, int price, String agecategory, String description, UserModel usr) {
 		super();
-		Id = id;
-		ToyName = toyName;
-		Price = price;
-		AgeCategory = ageCategory;
-		Description = description;
+		this.id = id;
+		this.toyname = toyname;
+		this.price = price;
+		this.agecategory = agecategory;
+		this.description = description;
+		this.usr = usr;
 	}
+
 	public int getId() {
-		return Id;
+		return id;
 	}
+
 	public void setId(int id) {
-		Id = id;
+		this.id = id;
 	}
-	public String getToyName() {
-		return ToyName;
+
+	public String getToyname() {
+		return toyname;
 	}
-	public void setToyName(String toyName) {
-		ToyName = toyName;
+
+	public void setToyname(String toyname) {
+		this.toyname = toyname;
 	}
+
 	public int getPrice() {
-		return Price;
+		return price;
 	}
+
 	public void setPrice(int price) {
-		Price = price;
+		this.price = price;
 	}
-	public String getAgeCategory() {
-		return AgeCategory;
+
+	public String getAgecategory() {
+		return agecategory;
 	}
-	public void setAgeCategory(String ageCategory) {
-		AgeCategory = ageCategory;
+
+	public void setAgecategory(String agecategory) {
+		this.agecategory = agecategory;
 	}
+
 	public String getDescription() {
-		return Description;
+		return description;
 	}
+
 	public void setDescription(String description) {
-		Description = description;
+		this.description = description;
 	}
+
+	public UserModel getUsr() {
+		return usr;
+	}
+
+	public void setUsr(UserModel usr) {
+		this.usr = usr;
+	}
+	
+	
+	
 	
 }

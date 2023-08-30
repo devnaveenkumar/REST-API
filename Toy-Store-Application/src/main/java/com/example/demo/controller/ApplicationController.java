@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import java.util.List;
 
-import org.apache.el.stream.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.ApplicationModel;
+
 import com.example.demo.services.ApplicationServices;
 
 @RestController
@@ -77,9 +77,36 @@ public class ApplicationController {
 		return "Object deleted";
 	}
 	
+	
+	//To delete all elements
 	@DeleteMapping("removeall")
 	public String deleteall() {
 		as.deleteall();
 		return "Everything is deleted";
+	}
+	
+	@GetMapping("sort/{name}")
+	public List<ApplicationModel> sort(@PathVariable String name){
+		return as.sortinfo(name);
+	}
+	
+	@GetMapping("{pageno}/{pagesize}")
+	public List<ApplicationModel> showinfo(@PathVariable int pageno,@PathVariable int pagesize){
+		return as.getbypage(pageno, pagesize);
+	}
+	
+	@GetMapping("getmodel/{i}")
+	public List<ApplicationModel> getmodel(@PathVariable int i){
+		return as.getmodel(i);
+	}
+	
+	@DeleteMapping("deletefromtable/{i}")
+	public String deletefromtable(@PathVariable int i) {
+		return as.deletefromtable(i);
+	}
+	
+	@PutMapping("updatetable/{i}")
+	public String updatetable(@PathVariable int i) {
+		return as.updatetable(i);
 	}
 }
